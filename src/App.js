@@ -22,13 +22,18 @@ class App extends Component {
 }`
   };
 
-  query = async () => {
+  query = () => {
     this.setState({ results: { status: "Loading..." } });
-    const result = await dgraphClient
+    dgraphClient
       .newTxn()
-      .queryWithVars(this.state.query, JSON.parse(this.state.vars));
+      .queryWithVars(this.state.query, JSON.parse(this.state.vars))
+      .then(result => {
+        this.setState({ results: result.data });
+      })
+      .catch(err => {
+        this.setState({ results: err })
+      })
 
-    this.setState({ results: result.data });
   };
 
   render() {
