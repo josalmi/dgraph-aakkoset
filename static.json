@@ -1,0 +1,8 @@
+{
+  "root": "build/",
+  "proxies": {
+    "/query/": {
+      "origin": "${API_URL}"
+    }
+  }
+}
